@@ -142,6 +142,20 @@ button {
     <option value="1.9">Very Active</option>
 </select>
 
+<label>Goal</label>
+<select id="goal">
+    <option value="maintain">Maintain</option>
+    <option value="lose">Lose</option>
+    <option value="gain">Gain</option>
+</select>
+
+<label>Rate (cal/day)</label>
+<select id="rate">
+    <option value="250">Slow</option>
+    <option value="500">Moderate</option>
+    <option value="750">Aggressive</option>
+</select>
+
 <button onclick="calculate()">Calculate</button>
 
 <div class="results" id="results">
@@ -166,6 +180,8 @@ function calculate() {
     const height = +document.getElementById('height').value;
     const weight = +document.getElementById('weight').value;
     const activity = +document.getElementById('activity').value;
+    const goal = document.getElementById('goal').value;
+    const rate = +document.getElementById('rate').value;
 
     if (!age || !height || !weight) {
         alert("Please fill in all fields");
@@ -177,7 +193,11 @@ function calculate() {
         : (10 * weight + 6.25 * height - 5 * age - 161);
 
     const maintenance = Math.round(bmr * activity);
-    const target = maintenance;
+
+    // Adjust target calories based on goal
+    let target = maintenance;
+    if (goal === 'lose') target = maintenance - rate;
+    if (goal === 'gain') target = maintenance + rate;
 
     const bmi = (weight / ((height / 100) ** 2)).toFixed(1);
 
