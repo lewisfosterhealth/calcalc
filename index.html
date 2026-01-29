@@ -8,137 +8,171 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 
 <style>
+/* Body and general font */
 body {
     margin: 0;
     font-family: 'Inter', sans-serif;
-    background: #121212;
+    background: linear-gradient(135deg, #121212, #1a1a1a);
     color: #f0f0f0;
 }
 
+/* Container with glass effect */
 .container {
     max-width: 700px;
     margin: 60px auto;
     padding: 40px;
-    background: rgba(0,0,0,0.85);
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    background: rgba(30,30,30,0.85);
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.7);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.1);
 }
 
+/* Heading */
 h1 {
     text-align: center;
     font-weight: 800;
-    font-size: 2.4rem;
+    font-size: 2.6rem;
     letter-spacing: 2px;
     background: linear-gradient(90deg, #19bf85, #0f9d72, #19bf85);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin-bottom: 30px;
+    margin-bottom: 35px;
 }
 
+/* Labels */
 label {
     display: block;
-    margin-top: 18px;
+    margin-top: 20px;
     font-weight: 600;
+    font-size: 1.05rem;
+    color: #ddd;
 }
 
+/* Inputs & selects */
 input, select {
     width: 100%;
-    padding: 14px;
+    padding: 16px;
     margin-top: 6px;
-    border-radius: 8px;
+    border-radius: 12px;
     border: 1px solid #444;
-    background: #1c1c1c;
+    background: rgba(50,50,50,0.85);
     color: #f0f0f0;
     font-size: 16px;
+    transition: border 0.3s, background 0.3s;
 }
 
+input:focus, select:focus {
+    outline: none;
+    border-color: #19bf85;
+    background: rgba(50,50,50,0.95);
+}
+
+/* Button */
 button {
     margin-top: 30px;
     width: 100%;
-    padding: 16px;
+    padding: 18px;
     background: linear-gradient(135deg, #19bf85, #0f9d72);
     color: #000;
     font-size: 18px;
     font-weight: 700;
     border: none;
-    border-radius: 10px;
+    border-radius: 12px;
     cursor: pointer;
-    transition: transform 0.2s;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
 button:hover {
-    transform: scale(1.05);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.6);
 }
 
+/* Results Card */
 .results {
     display: none;
     margin-top: 30px;
-    padding: 25px;
-    background: #1a1a1a;
-    border-radius: 12px;
+    padding: 30px;
+    background: rgba(40,40,40,0.85);
+    border-radius: 18px;
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    transition: all 0.3s;
 }
 
+.results p {
+    font-size: 1.1rem;
+    margin: 12px 0;
+}
+
+/* BMI Bar */
 .bmi-bar {
-    margin-top: 12px;
-    height: 16px;
-    background: linear-gradient(
-        to right,
-        #f39c12 0%,
-        #f39c12 18.5%,
-        #2ecc71 18.5%,
-        #2ecc71 24.9%,
-        #f1c40f 24.9%,
-        #f1c40f 29.9%,
-        #e74c3c 29.9%,
-        #e74c3c 50%
-    );
-    border-radius: 10px;
+    margin-top: 14px;
+    height: 18px;
+    background: #555;
+    border-radius: 12px;
     position: relative;
+    overflow: hidden;
+}
+
+.bmi-bar-fill {
+    height: 100%;
+    border-radius: 12px;
+    width: 0%;
+    transition: width 0.5s, background 0.5s;
 }
 
 .bmi-marker {
     position: absolute;
-    top: -4px;
+    top: -3px;
     width: 4px;
     height: 24px;
     background: #fff;
     border-radius: 2px;
+    transition: left 0.5s;
 }
 
+/* BMI Warning */
 #bmi-warning {
     font-weight: 700;
     color: #f39c12;
     display: inline-block;
-    margin-left: 6px;
-    font-size: 1rem;
+    margin-left: 8px;
 }
 
-iframe {
-    width: 100%;
-    height: 648px;
-    border: none;
-    margin-top: 16px;
-}
-
+/* Website Button */
 .footer-link {
     text-align: center;
-    margin-top: 30px;
+    margin-top: 40px;
 }
 
 .footer-link a {
     display: inline-block;
-    padding: 16px 30px;
+    padding: 18px 35px;
     font-size: 20px;
     font-weight: 700;
-    border-radius: 12px;
+    border-radius: 14px;
     background: linear-gradient(135deg, #ffb347, #ffcc33);
     color: #000;
     text-decoration: none;
-    transition: transform 0.2s;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .footer-link a:hover {
-    transform: scale(1.05);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+}
+
+/* Embedded Google Form */
+iframe {
+    width: 100%;
+    height: 648px;
+    border: none;
+    margin-top: 20px;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
 }
 </style>
 </head>
@@ -190,6 +224,7 @@ iframe {
     </p>
 
     <div class="bmi-bar">
+        <div class="bmi-bar-fill" id="bmi-fill"></div>
         <div class="bmi-marker" id="marker"></div>
     </div>
 
@@ -234,12 +269,18 @@ function calculate() {
     document.getElementById('maint').textContent = maintenance;
     document.getElementById('target').textContent = target;
     document.getElementById('bmi').textContent = bmi;
-
     document.getElementById('bmi-warning').textContent = bmi >= 25 ? " — Time to take action!" : "";
 
     const marker = document.getElementById('marker');
     const percent = Math.min(Math.max((bmi / 50) * 100, 0), 100);
     marker.style.left = `calc(${percent}% - 2px)`;
+
+    const fill = document.getElementById('bmi-fill');
+    if (bmi < 18.5) fill.style.background = '#3498db'; // underweight blue
+    else if (bmi < 25) fill.style.background = '#2ecc71'; // healthy green
+    else if (bmi < 30) fill.style.background = '#f1c40f'; // overweight yellow
+    else fill.style.background = '#e74c3c'; // obese red
+    fill.style.width = `${percent}%`;
 
     document.getElementById('results').style.display = 'block';
 }
