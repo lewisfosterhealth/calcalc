@@ -106,19 +106,15 @@ button {
 }
 
 .footer-link a {
-    display: inline-block;
-    padding: 14px 28px;
-    font-size: 18px;
-    font-weight: 700;
-    color: #000;
-    background: linear-gradient(135deg, #19bf85, #0f9d72);
-    border-radius: 12px;
+    color: #19bf85;
     text-decoration: none;
-    transition: transform 0.2s, box-shadow 0.2s;
+    font-weight: 600;
 }
-.footer-link a:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(25, 191, 133, 0.6);
+
+#bmi-warning {
+    font-weight: 700;
+    color: #f39c12;
+    margin-left: 6px;
 }
 </style>
 </head>
@@ -152,26 +148,15 @@ button {
     <option value="1.9">Very Active</option>
 </select>
 
-<label>Goal</label>
-<select id="goal">
-    <option value="maintain">Maintain</option>
-    <option value="lose">Lose Weight</option>
-    <option value="gain">Gain Weight</option>
-</select>
-
-<label>Rate (cal/day)</label>
-<select id="rate">
-    <option value="250">Slow</option>
-    <option value="500">Moderate</option>
-    <option value="750">Aggressive</option>
-</select>
-
 <button onclick="calculate()">Calculate</button>
 
 <div class="results" id="results">
     <p><strong>Maintenance Calories:</strong> <span id="maint"></span> kcal</p>
-    <p><strong>Target Calories (Goal):</strong> <span id="target"></span> kcal</p>
-    <p><strong>BMI:</strong> <span id="bmi"></span></p>
+    <p><strong>Target Calories:</strong> <span id="target"></span> kcal</p>
+    <p><strong>BMI:</strong> <span id="bmi"></span><span id="bmi-warning"></span></p>
+
+    <label for="email">Enter your email to get tips and updates:</label>
+    <input type="email" id="email" placeholder="you@example.com">
 
     <div class="bmi-bar">
         <div class="bmi-marker" id="marker"></div>
@@ -190,25 +175,18 @@ function calculate() {
     const height = +document.getElementById('height').value;
     const weight = +document.getElementById('weight').value;
     const activity = +document.getElementById('activity').value;
-    const goal = document.getElementById('goal').value;
-    const rate = +document.getElementById('rate').value;
 
     if (!age || !height || !weight) {
         alert("Please fill in all fields");
         return;
     }
 
-    // BMR calculation
     let bmr = sex === 'male'
         ? (10 * weight + 6.25 * height - 5 * age + 5)
         : (10 * weight + 6.25 * height - 5 * age - 161);
 
     const maintenance = Math.round(bmr * activity);
-
-    // Adjust target calories based on goal
-    let target = maintenance;
-    if (goal === 'lose') target = maintenance - rate;
-    if (goal === 'gain') target = maintenance + rate;
+    const target = maintenance;
 
     const bmi = (weight / ((height / 100) ** 2)).toFixed(1);
 
@@ -216,6 +194,11 @@ function calculate() {
     document.getElementById('target').textContent = target;
     document.getElementById('bmi').textContent = bmi;
 
+    // Show warning if BMI ≥ 25
+    const bmiWarning = document.getElementById('bmi-warning');
+    bmiWarning.textContent = bmi >= 25 ? " — Time to take action!" : "";
+
+    // Position the marker
     const marker = document.getElementById('marker');
     const percent = Math.min(Math.max((bmi / 50) * 100, 0), 100);
     marker.style.left = `calc(${percent}% - 2px)`;
