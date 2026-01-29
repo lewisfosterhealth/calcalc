@@ -193,7 +193,7 @@ iframe {
         <div class="bmi-marker" id="marker"></div>
     </div>
 
-    <!-- Google Form for email collection -->
+    <!-- Google Form -->
     <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScdfL9GCQS6nyja0-XW1lOLiLWn8DgHlG1bqLcqAzDP4VIkHQ/viewform?embedded=true">
         Loading…
     </iframe>
@@ -224,15 +224,10 @@ function calculate() {
 
     const maintenance = Math.round(bmr * activity);
 
-    // Adjust target calories based on goal
     let target;
-    if (goal === 'weight_loss') {
-        target = Math.round(maintenance * 0.8); // 20% deficit
-    } else if (goal === 'weight_gain') {
-        target = Math.round(maintenance * 1.2); // 20% surplus
-    } else {
-        target = maintenance;
-    }
+    if (goal === 'weight_loss') target = Math.round(maintenance * 0.8);
+    else if (goal === 'weight_gain') target = Math.round(maintenance * 1.2);
+    else target = maintenance;
 
     const bmi = (weight / ((height / 100) ** 2)).toFixed(1);
 
@@ -240,16 +235,12 @@ function calculate() {
     document.getElementById('target').textContent = target;
     document.getElementById('bmi').textContent = bmi;
 
-    // Show warning if BMI enters orange/red zone (>=25)
-    const bmiWarning = document.getElementById('bmi-warning');
-    bmiWarning.textContent = bmi >= 25 ? " — Time to take action!" : "";
+    document.getElementById('bmi-warning').textContent = bmi >= 25 ? " — Time to take action!" : "";
 
-    // Position the marker
     const marker = document.getElementById('marker');
     const percent = Math.min(Math.max((bmi / 50) * 100, 0), 100);
     marker.style.left = `calc(${percent}% - 2px)`;
 
-    // Show results section
     document.getElementById('results').style.display = 'block';
 }
 </script>
