@@ -105,8 +105,8 @@ button {
     margin-top: 30px;
 }
 
-/* Website Button */
-.website-btn {
+/* Make footer link look like a button */
+.footer-link a {
     display: inline-block;
     padding: 14px 28px;
     font-size: 18px;
@@ -115,49 +115,11 @@ button {
     background: linear-gradient(135deg, #19bf85, #0f9d72);
     border-radius: 12px;
     text-decoration: none;
-    margin-top: 20px;
     transition: transform 0.2s, box-shadow 0.2s;
 }
-.website-btn:hover {
+.footer-link a:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(25, 191, 133, 0.6);
-}
-
-/* Modal */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 999;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background: rgba(0,0,0,0.75);
-}
-
-.modal-content {
-    background: #1a1a1a;
-    margin: 10% auto;
-    padding: 20px;
-    border-radius: 12px;
-    width: 80%;
-    max-width: 700px;
-}
-
-.modal-content iframe {
-    width: 100%;
-    height: 600px;
-    border: none;
-    border-radius: 12px;
-}
-
-.close {
-    color: #f0f0f0;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
 }
 </style>
 </head>
@@ -204,16 +166,8 @@ button {
 </div>
 
 <div class="footer-link">
-    <a href="https://www.ebpt.co.uk" target="_blank" class="website-btn">Lewis Foster Coach Website</a>
+    <a href="https://www.ebpt.co.uk" target="_blank">Lewis Foster Coach Website</a>
 </div>
-</div>
-
-<!-- Modal for Google Form -->
-<div id="formModal" class="modal">
-  <div class="modal-content">
-    <span class="close" id="closeModal">&times;</span>
-    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScdfL9GCQS6nyja0-XW1lOLiLWn8DgHlG1bqLcqAzDP4VIkHQ/viewform?embedded=true"></iframe>
-  </div>
 </div>
 
 <script>
@@ -247,24 +201,6 @@ function calculate() {
     marker.style.left = `calc(${percent}% - 2px)`;
 
     document.getElementById('results').style.display = 'block';
-
-    // Show the Google Form modal after 3 seconds
-    setTimeout(() => {
-        document.getElementById('formModal').style.display = 'block';
-    }, 3000);
-}
-
-// Close modal
-document.getElementById('closeModal').onclick = function() {
-    document.getElementById('formModal').style.display = 'none';
-}
-
-// Close modal if clicking outside
-window.onclick = function(event) {
-    const modal = document.getElementById('formModal');
-    if (event.target == modal) {
-        modal.style.display = 'none';
-    }
 }
 </script>
 
