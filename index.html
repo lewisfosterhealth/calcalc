@@ -105,50 +105,59 @@ button {
     margin-top: 30px;
 }
 
-.footer-link a {
-    color: #19bf85;
+/* Website Button */
+.website-btn {
+    display: inline-block;
+    padding: 14px 28px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #000;
+    background: linear-gradient(135deg, #19bf85, #0f9d72);
+    border-radius: 12px;
     text-decoration: none;
-    font-weight: 600;
+    margin-top: 20px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.website-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(25, 191, 133, 0.6);
 }
 
-/* Modal styles */
+/* Modal */
 .modal {
     display: none;
     position: fixed;
-    z-index: 1000;
+    z-index: 999;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0,0,0,0.8);
+    background: rgba(0,0,0,0.75);
 }
 
 .modal-content {
-    background-color: #1c1c1c;
-    margin: 5% auto;
+    background: #1a1a1a;
+    margin: 10% auto;
     padding: 20px;
     border-radius: 12px;
-    width: 90%;
+    width: 80%;
     max-width: 700px;
-    position: relative;
+}
+
+.modal-content iframe {
+    width: 100%;
+    height: 600px;
+    border: none;
+    border-radius: 12px;
 }
 
 .close {
-    color: #fff;
-    position: absolute;
-    right: 20px;
-    top: 20px;
+    color: #f0f0f0;
+    float: right;
     font-size: 28px;
     font-weight: bold;
     cursor: pointer;
-}
-
-iframe {
-    width: 100%;
-    height: 650px;
-    border: none;
-    border-radius: 8px;
 }
 </style>
 </head>
@@ -191,4 +200,73 @@ iframe {
 
     <div class="bmi-bar">
         <div class="bmi-marker" id="marker"></div>
-    </
+    </div>
+</div>
+
+<div class="footer-link">
+    <a href="https://www.ebpt.co.uk" target="_blank" class="website-btn">Lewis Foster Coach Website</a>
+</div>
+</div>
+
+<!-- Modal for Google Form -->
+<div id="formModal" class="modal">
+  <div class="modal-content">
+    <span class="close" id="closeModal">&times;</span>
+    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScdfL9GCQS6nyja0-XW1lOLiLWn8DgHlG1bqLcqAzDP4VIkHQ/viewform?embedded=true"></iframe>
+  </div>
+</div>
+
+<script>
+function calculate() {
+    const sex = document.getElementById('sex').value;
+    const age = +document.getElementById('age').value;
+    const height = +document.getElementById('height').value;
+    const weight = +document.getElementById('weight').value;
+    const activity = +document.getElementById('activity').value;
+
+    if (!age || !height || !weight) {
+        alert("Please fill in all fields");
+        return;
+    }
+
+    let bmr = sex === 'male'
+        ? (10 * weight + 6.25 * height - 5 * age + 5)
+        : (10 * weight + 6.25 * height - 5 * age - 161);
+
+    const maintenance = Math.round(bmr * activity);
+    const target = maintenance;
+
+    const bmi = (weight / ((height / 100) ** 2)).toFixed(1);
+
+    document.getElementById('maint').textContent = maintenance;
+    document.getElementById('target').textContent = target;
+    document.getElementById('bmi').textContent = bmi;
+
+    const marker = document.getElementById('marker');
+    const percent = Math.min(Math.max((bmi / 50) * 100, 0), 100);
+    marker.style.left = `calc(${percent}% - 2px)`;
+
+    document.getElementById('results').style.display = 'block';
+
+    // Show the Google Form modal after 3 seconds
+    setTimeout(() => {
+        document.getElementById('formModal').style.display = 'block';
+    }, 3000);
+}
+
+// Close modal
+document.getElementById('closeModal').onclick = function() {
+    document.getElementById('formModal').style.display = 'none';
+}
+
+// Close modal if clicking outside
+window.onclick = function(event) {
+    const modal = document.getElementById('formModal');
+    if (event.target == modal) {
+        modal.style.display = 'none';
+    }
+}
+</script>
+
+</body>
+</html>
