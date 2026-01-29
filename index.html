@@ -114,7 +114,15 @@ button {
 #bmi-warning {
     font-weight: 700;
     color: #f39c12;
+    display: inline-block;
     margin-left: 6px;
+    font-size: 1rem;
+}
+iframe {
+    width: 100%;
+    height: 648px;
+    border: none;
+    margin-top: 16px;
 }
 </style>
 </head>
@@ -151,16 +159,23 @@ button {
 <button onclick="calculate()">Calculate</button>
 
 <div class="results" id="results">
-    <p><strong>Maintenance Calories:</strong> <span id="maint"></span> kcal</p>
-    <p><strong>Target Calories:</strong> <span id="target"></span> kcal</p>
-    <p><strong>BMI:</strong> <span id="bmi"></span><span id="bmi-warning"></span></p>
-
-    <label for="email">Enter your email to get tips and updates:</label>
-    <input type="email" id="email" placeholder="you@example.com">
+    <p>
+        <strong>Maintenance Calories:</strong> <span id="maint"></span> kcal
+    </p>
+    <p>
+        <strong>Target Calories:</strong> <span id="target"></span> kcal
+    </p>
+    <p>
+        <strong>BMI:</strong> <span id="bmi"></span>
+        <span id="bmi-warning"></span>
+    </p>
 
     <div class="bmi-bar">
         <div class="bmi-marker" id="marker"></div>
     </div>
+
+    <!-- Embedded Google Form for email collection -->
+    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScdfL9GCQS6nyja0-XW1lOLiLWn8DgHlG1bqLcqAzDP4VIkHQ/viewform?embedded=true">Loading…</iframe>
 </div>
 
 <div class="footer-link">
@@ -194,7 +209,7 @@ function calculate() {
     document.getElementById('target').textContent = target;
     document.getElementById('bmi').textContent = bmi;
 
-    // Show warning if BMI ≥ 25
+    // Show warning if BMI enters orange/red zone (>= 25)
     const bmiWarning = document.getElementById('bmi-warning');
     bmiWarning.textContent = bmi >= 25 ? " — Time to take action!" : "";
 
@@ -203,6 +218,7 @@ function calculate() {
     const percent = Math.min(Math.max((bmi / 50) * 100, 0), 100);
     marker.style.left = `calc(${percent}% - 2px)`;
 
+    // Show results section
     document.getElementById('results').style.display = 'block';
 }
 </script>
