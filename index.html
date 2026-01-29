@@ -63,6 +63,11 @@ button {
     border: none;
     border-radius: 10px;
     cursor: pointer;
+    transition: transform 0.2s;
+}
+
+button:hover {
+    transform: scale(1.05);
 }
 
 .results {
@@ -121,9 +126,19 @@ iframe {
 }
 
 .footer-link a {
-    color: #19bf85;
+    display: inline-block;
+    padding: 16px 30px;
+    font-size: 20px;
+    font-weight: 700;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #ffb347, #ffcc33);
+    color: #000;
     text-decoration: none;
-    font-weight: 600;
+    transition: transform 0.2s;
+}
+
+.footer-link a:hover {
+    transform: scale(1.05);
 }
 </style>
 </head>
@@ -157,6 +172,13 @@ iframe {
     <option value="1.9">Very Active</option>
 </select>
 
+<label>Goal</label>
+<select id="goal">
+    <option value="maintenance">Maintain Weight</option>
+    <option value="weight_loss">Lose Weight</option>
+    <option value="weight_gain">Gain Weight</option>
+</select>
+
 <button onclick="calculate()">Calculate</button>
 
 <div class="results" id="results">
@@ -178,7 +200,7 @@ iframe {
 </div>
 
 <div class="footer-link">
-    <a href="https://www.ebpt.co.uk" target="_blank">Lewis Foster Coach Website</a>
+    <a href="https://www.ebpt.co.uk" target="_blank">Visit Lewis Foster Coach Website</a>
 </div>
 </div>
 
@@ -189,6 +211,7 @@ function calculate() {
     const height = +document.getElementById('height').value;
     const weight = +document.getElementById('weight').value;
     const activity = +document.getElementById('activity').value;
+    const goal = document.getElementById('goal').value;
 
     if (!age || !height || !weight) {
         alert("Please fill in all fields");
@@ -200,7 +223,16 @@ function calculate() {
         : (10 * weight + 6.25 * height - 5 * age - 161);
 
     const maintenance = Math.round(bmr * activity);
-    const target = maintenance;
+
+    // Adjust target calories based on goal
+    let target;
+    if (goal === 'weight_loss') {
+        target = Math.round(maintenance * 0.8); // 20% deficit
+    } else if (goal === 'weight_gain') {
+        target = Math.round(maintenance * 1.2); // 20% surplus
+    } else {
+        target = maintenance;
+    }
 
     const bmi = (weight / ((height / 100) ** 2)).toFixed(1);
 
